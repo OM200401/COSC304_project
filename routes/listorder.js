@@ -46,16 +46,6 @@ router.get('/', function(req, res, next) {
                 num = num.toFixed(2);
 
                 res.write("<tr><td>" + result.orderID + 
-<<<<<<< HEAD
-                "</td><td>" + moment(result.orderDate).format("YYYY-MM-DD HH:mm:ss") + 
-                "</td><td>" + result.customerId + 
-                "</td><td>" + result.firstName + " " + result.lastName + 
-                "</td><td>" + result.totalAmount + "</td></tr>");
-                res.write("<table><tr><th>Product ID</th><th>Quantity</th><th>Price</th></tr>");
-                res.write("<tr><td>"+ result.orderID+
-                "</td><td>"+ result.quantity+
-                "</td><td>"+ result.price.toFixed(2)+"</td></tr></table>") 
-=======
                         "</td><td>" + moment(result.orderDate).format("YYYY-MM-DD HH:mm:ss") + 
                         "</td><td>" + result.customerId + 
                         "</td><td>" + result.firstName + " " + result.lastName + 
@@ -75,7 +65,6 @@ router.get('/', function(req, res, next) {
                               "<td>" + "$" + innerResult.price.toFixed(2) + "</td></tr>") 
                 }
                 res.write("</tbody></table></td></tr>");
->>>>>>> 0678c780c880cda523a3f16f5bef7a7df3ef5eed
             }
             res.write("</table>");
             res.end();
