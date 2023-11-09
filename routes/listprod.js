@@ -52,8 +52,9 @@ router.get('/', async function(req, res, next) {
             let result = results.recordset[i];
             let productId = result.productId;
             let productName = result.productName;
+            let productNameURL = encodeURIComponent(productName);
             let productPrice = result.productPrice;
-            const addCartLink = 'addCart?id='+productId+'&name='+productName+'&price='+productPrice;
+            const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
             res.write('<tr><td><a href='+addCartLink+'>Add to Cart</a></td><td>'+productName+'</td><td>$'+parseFloat(productPrice).toFixed(2)+'</td></tr>');
         }
         res.write("</table>");
