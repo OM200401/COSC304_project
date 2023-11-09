@@ -46,7 +46,6 @@ router.get('/', function(req, res, next) {
                 num = num.toFixed(2);
 
                 res.write("<tr><td>" + result.orderID + 
-<<<<<<< HEAD
                 "</td><td>" + moment(result.orderDate).format("YYYY-MM-DD HH:mm:ss") + 
                 "</td><td>" + result.customerId + 
                 "</td><td>" + result.firstName + " " + result.lastName + 
