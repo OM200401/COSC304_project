@@ -48,10 +48,10 @@ router.get('/', function(req, res, next) {
                 "</td><td>" + result.customerId + 
                 "</td><td>" + result.firstName + " " + result.lastName + 
                 "</td><td>" + result.totalAmount + "</td></tr>");
-                // res.write("<table><tr><th>Product ID</th><th>Quantity</th><th>Price</th></tr>");
-                // res.write("<tr><td>"+ result.orderID+
-                // "</td><td>"+ result.quantity+
-                // "</td><td>"+ result.price.toFixed(2)+"</td></tr></table>") 
+                res.write("<table><tr><th>Product ID</th><th>Quantity</th><th>Price</th></tr>");
+                res.write("<tr><td>"+ result.orderID+
+                "</td><td>"+ result.quantity+
+                "</td><td>"+ result.price.toFixed(2)+"</td></tr></table>") 
             }
             res.write("</table>");
 

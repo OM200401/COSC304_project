@@ -50,9 +50,11 @@ router.get('/', async function(req, res, next) {
         res.write("<table><tr><th>Product Name</th><th>Price</th></tr>");
         for(let i=0; i<results.recordset.length ; i++){
             let result = results.recordset[i];
-            const formattedPrice = parseFloat(result.productPrice).toFixed(2);
-            const addCartLink = '/addCart?id=(result.productId)&name=(result.productName)price=(formattedPrice)';
-            res.write('<tr><td><a href='+{addCartLink}+'>Add to Cart</a></td><td>'+result.productName+'</td><td>$'+formattedPrice+'</td></tr>');
+            let productId = result.productId;
+            let productName = result.productName;
+            let productPrice = result.productPrice;
+            const addCartLink = 'addCart?id='+productId+'&name='+productName+'&price='+productPrice;
+            res.write('<tr><td><a href='+addCartLink+'>Add to Cart</a></td><td>'+productName+'</td><td>$'+parseFloat(productPrice).toFixed(2)+'</td></tr>');
         }
         res.write("</table>");
         res.end();
