@@ -5,7 +5,8 @@ const moment = require('moment');
 
 router.get('/', async function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>YOUR NAME Grocery Order Processing</title>");
+    res.write("<title>Order Summary</title>");
+
 
     let productList = false;
     if (req.session.productList && req.session.productList.length > 0) {
@@ -18,7 +19,12 @@ router.get('/', async function(req, res, next) {
     If either are not true, display an error message
     **/
     try{
+        let pool = await sql.connect(dbConfig);
         let customerId = req.query.customerId;
+        let sqlQ1 = "SELECT * FROM customer"
+        let result = await pool.request().query(sqlQ1);
+
+        let custName = result.recordset[0].firstName+" "+result.recordset[0].lastName;
         if(!customerId){
             res.write("<h1>Invalid Customer ID</h1>");
             res.end();
@@ -50,19 +56,15 @@ router.get('/', async function(req, res, next) {
             }
             await saveorderproduct(orderId, product);
         }
+        await printordersummary(orderId);
+        res.write("<h1>Shipping to Customer: "+customerId+"</h1>");
+        res.write("<h1>Customer Name: "+custName+"</h1>");
 
     }catch(err){
         console.error(err);
     }
 
     /** Make connection and validate **/
-    async function connect(){
-        try{
-            let pool = await sql.connect(dbConfig);
-        }catch(err){
-            console.error(err);
-        }
-    }
 
     /** Save order information to database**/
 
@@ -77,18 +79,20 @@ router.get('/', async function(req, res, next) {
         let orderId = result.recordset[0].orderId;
         **/
     async function saveorders(orderDate, customerId, total){
+        // let orderId;
         try{
+            let pool = await sql.connect(dbConfig);
             let sqlQuery = "INSERT INTO ordersummary (orderDate, customerId, totalAmount) OUTPUT INSERTED.orderId VALUES(@orderDate, @customerId, @totalAmount)";
             let result = await pool.request()
                 .input('orderDate',sql.DateTime, moment().format("YYYY-MM-DD HH:mm:ss"))
                 .input('customerId',sql.Int, customerId)
                 .input('totalAmount',sql.Decimal, total)
                 .query(sqlQuery);
-            for(let i=0; i<result.recordset.length; i++){
-                let result = result.recordset[i];
-                let orderId = result.orderId;
-            }
-            return orderId;
+            // for(let i=0; i<result.recordset.length; i++){
+            //     let result = result.recordset[i];
+            //     orderId = result.orderId;
+            // }
+            return result.recordset[0].orderId;
         }catch(err){
             console.error(err);
         }
@@ -97,6 +101,7 @@ router.get('/', async function(req, res, next) {
     /** Insert each item into OrderedProduct table using OrderId from previous INSERT **/
     async function saveorderproduct(orderId, product){
         try{
+            let pool = await sql.connect(dbConfig);
             let sqlQuery = "INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES(@orderId, @productId, @quantity, @price)";
             let result = await pool.request()
                 .input('orderId',sql.Int, orderId)
@@ -124,6 +129,35 @@ router.get('/', async function(req, res, next) {
     **/
 
     /** Print out order summary **/
+
+    async function printordersummary(orderId){
+        try{
+            let pool = await sql.connect(dbConfig);
+            let total = 0;
+            let sqlQuery = "SELECT op.productId, p.productName, op.quantity, op.price FROM orderproduct op JOIN product p ON op.productId = p.productId WHERE orderId = @orderId";
+            let result = await pool.request()
+                .input('orderId',sql.Int, orderId)
+                .query(sqlQuery);
+            res.write("<h1>Your Order Summary</h1>");
+            res.write("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>SubTotal</th></tr>");
+            for(let i=0; i<result.recordset.length; i++){
+                let resultset = result.recordset[i];
+                let productId = resultset.productId;
+                let productName = resultset.productName;
+                let quantity = resultset.quantity;
+                let price = resultset.price;
+                let subtotal = quantity * price;
+                res.write("<tr><td>"+productId+"</td><td>"+productName+"</td><td align=\"center\">"+quantity+"</td><td align=\"right\">$"+price.toFixed(2)+"</td><td align=\"right\">$"+subtotal.toFixed(2)+"</td></tr>");
+                total = subtotal + total;
+            }
+            res.write("</table>");
+            res.write("<tr><td colspan = \"4\" align = \"right\"><b>Order Total: </b><td align=\"right\">$" + total.toFixed(2)+"</td></tr>");
+            res.write("<h1>Order Completed! Will be shipped soon...</h1>");
+            res.write("<h1>Your Order Reference number is 1519")
+        }catch(err){
+            console.error(err);
+        }
+    }
 
     /** Clear session/cart **/
 

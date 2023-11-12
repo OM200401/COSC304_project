@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
     let id = false;
     let name = false;
     let price = false;
+
     if (req.query.id && req.query.name && req.query.price) {
         id = req.query.id;
         name = req.query.name;
