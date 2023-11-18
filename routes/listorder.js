@@ -32,13 +32,11 @@ router.get('/', function(req, res, next) {
             res.write('<h1>Oms Grocery Order List</h1>');
             
             let sqlQuery = "SELECT o.orderID, o.orderDate, o.customerId, c.firstName, c.lastName, o.totalAmount"
-            + " FROM ordersummary o JOIN customer c ON c.customerId = o.customerId";   
-            // let sqlQuery = "SELECT o.orderID, o.orderDate, o.customerId, c.firstName, c.lastName,o.totalAmount, op.productId, op.quantity, op.price"
-            // + " FROM customer c JOIN ordersummary o ON c.customerId = o.customerId JOIN orderproduct op ON o.orderId = op.orderId";  
+            + " FROM ordersummary o JOIN customer c ON c.customerId = o.customerId";     
             let results = await pool.request()
                 .query(sqlQuery);
             
-            res.write("<table border=1><tr><th>Order ID</th><th>Order Date</th><th>Customer ID</th><th>Customer Name</th><th>Total Amount</th></tr>");
+            res.write("<table class=\"table\" border=\"1\"><tr><th>Order ID</th><th>Order Date</th><th>Customer ID</th><th>Customer Name</th><th>Total Amount</th></tr>");
 
             for (let i = 0; i < results.recordset.length; i++) {
                 let result = results.recordset[i];
@@ -55,7 +53,7 @@ router.get('/', function(req, res, next) {
                                             .input('orderId', sql.Int, result.orderID)
                                             .query("SELECT op.productId, op.quantity, op.price FROM orderproduct op JOIN ordersummary o ON o.orderId = op.orderId WHERE o.orderId = @orderId")
 
-                res.write("<tr align=\"right\"> <td colspan=4> <table border=1> <tbody>");
+                res.write("<tr align=\"right\"> <td colspan=\"4\"> <table class=\"table\" border=\"1\"> <tbody>");
                 res.write("<tr><th>Product ID</th><th>Quantity</th><th>Price</th></tr>");
 
                 for(let j = 0; j < innerResults.recordset.length; j++){

@@ -21,10 +21,22 @@ router.get('/', async function(req, res, next) {
     try{
         let pool = await sql.connect(dbConfig);
         let customerId = req.query.customerId;
-        let sqlQ1 = "SELECT * FROM customer"
-        let result = await pool.request().query(sqlQ1);
+        let password = req.query.password;
+        let validateQuery = "SELECT * FROM customer where customerId = @customerId and password = @password";
+        let validateResult = await pool.request()
+        .input('customerId',sql.Int, customerId)
+        .input('password',sql.VarChar, password)
+        .query(validateQuery);
 
-        let custName = result.recordset[0].firstName+" "+result.recordset[0].lastName;
+        if(validateResult.recordset.length === 0){
+            res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"#3399FF\">T MART</font></h1>");
+            res.write("<hr>The password you entered was incorrect. Please go back and try again !</hr>")
+            res.end();
+            return;
+        }
+
+        let custName = validateResult.recordset[0].firstName+" "+validateResult.recordset[0].lastName;
+
         if(!customerId){
             res.write("<h1>Invalid Customer ID</h1>");
             res.end();
@@ -33,7 +45,7 @@ router.get('/', async function(req, res, next) {
         if(!productList){
             res.write("<h1>Shopping Cart is empty</h1>");
             res.end();
-            return;
+            return;a
         }
         let totalprice = 0;
         for(let i=0; i<productList.length; i++){
@@ -59,6 +71,7 @@ router.get('/', async function(req, res, next) {
         await printordersummary(orderId);
         res.write("<h1>Shipping to Customer: "+customerId+"</h1>");
         res.write("<h1>Customer Name: "+custName+"</h1>");
+        res.write("<h2><a href = \"/\">Back to Main Page</a></h2>")
 
     }catch(err){
         console.error(err);
@@ -79,7 +92,6 @@ router.get('/', async function(req, res, next) {
         let orderId = result.recordset[0].orderId;
         **/
     async function saveorders(orderDate, customerId, total){
-        // let orderId;
         try{
             let pool = await sql.connect(dbConfig);
             let sqlQuery = "INSERT INTO ordersummary (orderDate, customerId, totalAmount) OUTPUT INSERTED.orderId VALUES(@orderDate, @customerId, @totalAmount)";
@@ -88,10 +100,7 @@ router.get('/', async function(req, res, next) {
                 .input('customerId',sql.Int, customerId)
                 .input('totalAmount',sql.Decimal, total)
                 .query(sqlQuery);
-            // for(let i=0; i<result.recordset.length; i++){
-            //     let result = result.recordset[i];
-            //     orderId = result.orderId;
-            // }
+            
             return result.recordset[0].orderId;
         }catch(err){
             console.error(err);

@@ -25,7 +25,7 @@ router.get('/', async function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>T MART</title>");
-    res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"blue\">T MART </font></h1>")
+    res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"blue\"><a href = '/'>T MART</a></font></h1>")
     res.write("<h2>Browse Products By Category and Search by Product Name:</h1>");
     res.write("<form method=\"get\" action=\"listprod\">");
     res.write("<p align = \"left\">");
@@ -84,13 +84,15 @@ router.get('/', async function(req, res, next) {
             let productId = result.productId;
             let productName = result.productName;
             let productNameURL = encodeURIComponent(productName);
+            productNameURL = productNameURL.replace(/'/g,'%27');
             let productPrice = result.productPrice;                                                                                                                                                                                                                                                                                                                              
             let categoryname = result.categoryName;
             let categoryColor = getCategoryColor(categoryname);
             const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
+            const productDetail = 'product?id='+productId;
 
             res.write("<tr><td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><a href='" + addCartLink + "'>Add to Cart</a></td>");
-            res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + ";'>" + productName + "</td>");
+            res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + ";'><a href = '"+productDetail+"'>" + productName + "</a></td>");
             res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>" + categoryname + "</td>");
             res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>$" + parseFloat(productPrice).toFixed(2) + "</td></tr>");
             
@@ -120,24 +122,6 @@ function getCategoryColor(categoryName){
     };
 
     return fontcolor[categoryName];
-    // switch(categoryName){
-    //     case "Beverages":
-    //         return "#FFD700"; 
-    //     case "Condiments":
-    //         return "#FFA500"; 
-    //     case "Confections":
-    //         return "#FFC0CB";
-    //     case "Dairy Products":
-    //         return "#FF69B4";
-    //     case "Grains/Cereals":
-    //         return "#FF6347";
-    //     case "Meat/Poultry":
-    //         return "#FF0000";
-    //     case "Produce":
-    //         return "#FFA500";
-    //     case "Seafood":
-    //         return "#00FFFF";
-    // }
 }
 
 module.exports = router;
