@@ -169,6 +169,8 @@ router.get('/', async function(req, res, next) {
     }
 
     /** Clear session/cart **/
+    req.session.productList = [];
+    
 
     res.end();
 });

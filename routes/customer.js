@@ -3,7 +3,7 @@ const router = express.Router();
 const sql = require('mssql');
 const auth = require('../auth');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.checkAuthentication, function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
 
