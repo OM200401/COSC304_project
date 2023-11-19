@@ -9,8 +9,10 @@ router.post('/', function(req, res) {
     (async () => {
         let authenticatedUser = await validateLogin(req);
         if (authenticatedUser) {
+            req.session.authenticatedUser = true;
             res.redirect("/");
         } else {
+            req.session.loginMessage = "Could not connect to the system using that username/password.";
             res.redirect("/login");
         }
      })();
@@ -27,10 +29,18 @@ async function validateLogin(req) {
         try {
             let pool = await sql.connect(dbConfig);
 
-	// TODO: Check if userId and password match some customer account. 
-	// If so, set authenticatedUser to be the username.
+            let validateLogin = "SELECT * FROM customer where userid = @username and password = @password";
+            let validateResult = await pool.request()
+                                            .input('username',sql.VarChar, username)
+                                            .input('password',sql.VarChar, password)
+                                            .query(validateLogin);
+    
+            if(validateResult.recordset.length === 0){
+                return false;
+            }
+            req.session.username = username; 
+            return username;
 
-           return false;
         } catch(err) {
             console.dir(err);
             return false;
