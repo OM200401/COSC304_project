@@ -33,44 +33,46 @@ router.get('/', function(req, res, next) {
 	   	    // TODO: Create a new shipment record.
             let shipmentDate = moment().format('YYYY-MM-DD');
             let sqlQuery2 = "INSERT INTO shipment (shipmentDate) OUTPUT INSERTED.shipmentId VALUES (@shipmentDate)";
-            await transaction.request()
+            let shipmentResult = await transaction.request()
                 .input('shipmentDate', sql.Date, shipmentDate)
                 .query(sqlQuery2);
+            let shipmentId = shipmentResult.recordset[0].shipmentId;
 
 	   	    // TODO: For each item verify sufficient quantity available in warehouse 1.
-            for(let record = 0; record < results.recordset[0].length; record++){
+
+            for (let record of results.recordset) {
+                let productId = record.productId;
+                let quantity = record.quantity;
+    
                 let sqlQuery3 = "SELECT quantity FROM productinventory WHERE productId = @productId AND warehouseId = 1";
-                inventoryresults = await transaction.request()
-                    .input('productId', sql.Int, record.productId)
+                let inventoryResult = await transaction.request()
+                    .input('productId', sql.Int, productId)
                     .query(sqlQuery3);
-                let inventory = inventoryresults.recordset[0];
-                let quantity = inventory.quantity;
     
+                let inventoryQuantity = inventoryResult.recordset[0].quantity;
     
-                // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-                if(quantity < results.recordset[0].quantity){
+                if (inventoryQuantity < quantity) {
                     await transaction.rollback();
-                    res.write("<h1>Shipment not done. Insufficient inventory for product id: "+results.recordset[0].productId+"</h1>");
+                    res.write("<h1>Shipment not done. Insufficient inventory for product id: " + productId + "</h1>");
                     res.write("<h2><a href = '/'>Back to Main page</a></h2>");
                     res.end();
                     return;
-                }else{
-                    let sqlQuery4 = "UPDATE inventory SET quantity = @quantity WHERE productId = @productId AND warehouseId = 1";
+                } else {
+                    let newInventoryQuantity = inventoryQuantity - quantity;
+                    let sqlQuery4 = "UPDATE productinventory SET quantity = @quantity WHERE productId = @productId AND warehouseId = 1";
                     await transaction.request()
-                        .input('quantity', sql.Int, quantity - results.recordset[0].quantity)
+                        .input('quantity', sql.Int, newInventoryQuantity)
                         .input('productId', sql.Int, productId)
                         .query(sqlQuery4);
-                        
-                    res.write("<h2>Ordered Product: "+results.recordset[0].productId+" Qty :"+quantity+" Previous Inventory: "+results.recordset[0].quantity+" New inventory: "+(quantity - results.recordset[0].quantity)+"</h2>");
-
+    
+                    res.write("<h2>Ordered Product: " + productId + " Qty: " + quantity + " Previous Inventory: " + inventoryQuantity + " New inventory: " + newInventoryQuantity + "</h2>");
                 }
             }
 
-
 	   		await transaction.commit();
-               res.write("<h1>Shipment successfully processed.</h1>");
-               res.write("<h2><a href = '/'>Back to Main page</a></h2>");
-               res.end();
+            res.write("<h1>Shipment successfully processed.</h1>");
+            res.write("<h2><a href = '/'>Back to Main page</a></h2>");
+            res.end();
  
         } catch(err) {
             console.dir(err);
