@@ -3,7 +3,7 @@ const router = express.Router();
 const sql = require('mssql');
 const auth = require('../auth');
 
-router.get('/', auth.checkAuthentication, function(req, res, next) {
+router.get('/', function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
 
@@ -13,12 +13,13 @@ router.get('/', auth.checkAuthentication, function(req, res, next) {
 
             res.write('<h3>Customer Profile</h3>');
             
-            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +                  "postalCode, country, userid FROM customer WHERE userid = @username";   
+            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +                  
+                            "postalCode, country, userid FROM customer WHERE userid = @userid";   
 
-            console.log(req.query.username);
+            console.log(req.session.username);
 
             let customerInfo = await pool.request()
-                                   .input('username', sql.VarChar, "arnold")
+                                   .input('userid', sql.VarChar, req.session.userid)
                                    .query(sqlQuery);
 
             res.write("<table class=\"table\" border=\"1\">");
@@ -33,7 +34,7 @@ router.get('/', auth.checkAuthentication, function(req, res, next) {
                       "<tr><td> State </td><td>" + customerInfo.recordset[0].state + "</td></tr>" + 
                       "<tr><td> Postal Code </td><td>" + customerInfo.recordset[0].postalCode + "</td></tr>" + 
                       "<tr><td> Country </td><td>" + customerInfo.recordset[0].country + "</td></tr>" + 
-                      "<tr><td> User ID </td><td>" + customerInfo.recordset[0].userId + "</td></tr>");
+                      "<tr><td> User ID </td><td>" + customerInfo.recordset[0].userid + "</td></tr>");
 
             res.write("</table>");
             res.end();

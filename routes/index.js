@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
     res.write("<h2 align = \"center\"><a href=\"/admin\">Administrators</a></h2>");
     res.write("<h2 align = \"center\"><a href=\"/logout\">Log out</a></h2>");
     if(req.session.authenticatedUser)
-        res.write("<h3 align = \"center\">Signed in as: " + req.session.username + "</h3>");
+        res.write("<h3 align = \"center\">Signed in as: " + req.session.userid + "</h3>");
     res.end();
 })
 

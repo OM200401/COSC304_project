@@ -4,7 +4,7 @@ const moment = require('moment');
 const auth = require('../auth');
 const sql = require('mssql');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.checkAuthentication, function(req, res, next) {
     
     res.setHeader('Content-Type', 'text/html');
 

@@ -3,8 +3,10 @@ const sql = require('mssql');
 const auth = {
     checkAuthentication: function(req, res) {
         let authenticated = false;
+        console.log(req.session.authenticatedUser);
     
         if (req.session.authenticatedUser) {
+            
             authenticated = true;
         }
     

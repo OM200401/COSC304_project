@@ -23,23 +23,24 @@ async function validateLogin(req) {
         return false;
     }
 
-    let username = req.body.username;
+    let userid = req.body.username;
     let password = req.body.password;
     let authenticatedUser =  await (async function() {
         try {
             let pool = await sql.connect(dbConfig);
 
-            let validateLogin = "SELECT * FROM customer where userid = @username and password = @password";
+            let validateLogin = "SELECT * FROM customer where userid = @userid and password = @password";
             let validateResult = await pool.request()
-                                            .input('username',sql.VarChar, username)
+                                            .input('userid',sql.VarChar, userid)
                                             .input('password',sql.VarChar, password)
                                             .query(validateLogin);
     
-            if(validateResult.recordset.length === 0){
+            if(validateResult.recordset[0].length === 0){
                 return false;
             }
-            req.session.username = username; 
-            return username;
+            req.session.userid = userid; 
+
+            return userid;
 
         } catch(err) {
             console.dir(err);
