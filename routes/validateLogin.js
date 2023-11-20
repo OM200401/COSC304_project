@@ -40,7 +40,7 @@ async function validateLogin(req) {
             }
             req.session.userid = userid; 
 
-            return userid;
+            return true;
 
         } catch(err) {
             console.dir(err);

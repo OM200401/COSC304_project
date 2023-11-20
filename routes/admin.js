@@ -10,7 +10,6 @@ router.get('/', auth.checkAuthentication, function(req, res, next) {
 
     (async function() {
         try {
-            console.log("hello")
             res.write('<h3>Admin Sales Report by Day</h3>');
 
             let pool = await sql.connect(dbConfig);

@@ -1,13 +1,12 @@
 const sql = require('mssql');
 
 const auth = {
-    checkAuthentication: function(req, res) {
+    checkAuthentication: function(req, res, next) {
         let authenticated = false;
-        console.log(req.session.authenticatedUser);
     
         if (req.session.authenticatedUser) {
-            
             authenticated = true;
+            next();
         }
     
         if (!authenticated) {
@@ -16,7 +15,7 @@ const auth = {
             req.session.loginMessage = loginMessage;
             res.redirect("/login");
         }
-    
+        
         return authenticated;
     }
 }

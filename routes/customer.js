@@ -3,7 +3,7 @@ const router = express.Router();
 const sql = require('mssql');
 const auth = require('../auth');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.checkAuthentication, function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
 
@@ -13,10 +13,7 @@ router.get('/', function(req, res, next) {
 
             res.write('<h3>Customer Profile</h3>');
             
-            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +                  
-                            "postalCode, country, userid FROM customer WHERE userid = @userid";   
-
-            console.log(req.session.username);
+            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +                  "postalCode, country, userid FROM customer WHERE userid = @userId";   
 
             let customerInfo = await pool.request()
                                    .input('userid', sql.VarChar, req.session.userid)
