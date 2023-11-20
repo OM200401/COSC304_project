@@ -26,6 +26,7 @@ router.get('/', function(req, res, next) {
             // TODO: If there is a productImageURL, display using IMG tag
             // TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
             res.write("<img src = '"+product.productImageURL+"'>");
+            res.write("<img src = 'displayImage?id="+productId+"'>");
             res.write("<table>");
             res.write("<tr><th>Id</th><td>"+productId+"</td></tr>");
             res.write("<tr><th>Price</th><td> $"+productPrice+"</td></tr>");
