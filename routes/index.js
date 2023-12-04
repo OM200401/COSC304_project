@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 // Rendering the main page
 router.get('/', function (req, res) {
     let username = false;
@@ -13,15 +12,18 @@ router.get('/', function (req, res) {
     //     // to get an idea of how the index page is being rendered
     // });
 
-    res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"black\">Welcome to T MART </font></h1>");
-    res.write("<h2 align = \"center\"><a href=\"/login\">Login</a></h2>");
-    res.write("<h2 align = \"center\"><a href=\"/listprod\">Begin Shopping</a></h2>");
-    res.write("<h2 align = \"center\"><a href=\"/listorder\">List All Orders</a></h2>");
-    res.write("<h2 align = \"center\"><a href=\"/customer\">Customer Info</a></h2>");
-    res.write("<h2 align = \"center\"><a href=\"/admin\">Administrators</a></h2>");
-    res.write("<h2 align = \"center\"><a href=\"/logout\">Log out</a></h2>");
+    res.write("<div style='text-align: center; padding-top: 50px;'>");
+    res.write("<h1 style='font-family: 'Segoe UI', sans-serif; color: #00aaff;'>T MART</h1>");
+    res.write("<div style='display: flex; flex-direction: column; gap: 20px;'>");
+    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/login\" style='text-decoration: none; color: white;'>Login</a></button>");
+    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/listprod\" style='text-decoration: none; color: white;'>Begin Shopping</a></button>");
+    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/listorder\" style='text-decoration: none; color: white;'>List All Orders</a></button>");
+    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/customer\" style='text-decoration: none; color: white;'>Customer Info</a></button>");
+    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/admin\" style='text-decoration: none; color: white;'>Administrators</a></button>");
+    res.write("</div>");
     if(req.session.authenticatedUser)
-        res.write("<h3 align = \"center\">Signed in as: " + req.session.userid + "</h3>");
+        res.write("<p style='font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #00aaff;'>Signed in as: " + req.session.userid + "</p>");
+    res.write("</div>");
     res.end();
 })
 

@@ -59,8 +59,8 @@ router.get('/', function (req, res, next) {
 
             res.write("<td align=\"right\">$" + Number(product.price).toFixed(2) + "</td>");
             res.write("<td align=\"right\">$" + (Number(product.quantity.toFixed(2)) * Number(product.price)).toFixed(2) + "</td>");
-            res.write("<td align=\"right\"><a href = \"showcart/delete/"+product.id+"\">Remove Item from cart</a></td>");
-            res.write("<td align=\"right\"><input type=\"BUTTON\" onclick=\"\" value=\"Update Quantity\"></td>");            
+            // res.write("<td align=\"right\"><a href = \"showcart/delete/"+product.id+"\">Remove Item from cart</a></td>");
+            // res.write("<td align=\"right\"><input type=\"BUTTON\" onclick=\"\" value=\"Update Quantity\"></td>");            
             res.write("</tr>");
 
             total += product.quantity * product.price;

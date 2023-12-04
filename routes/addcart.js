@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
     // If the product list isn't set in the session,
     // create a new list.
     let productList = false;
+    
     if (!req.session.productList) {
         productList = [];
     } else {

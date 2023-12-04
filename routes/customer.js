@@ -13,7 +13,8 @@ router.get('/', auth.checkAuthentication, function(req, res, next) {
 
             res.write('<h3>Customer Profile</h3>');
             
-            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +                  "postalCode, country, userid FROM customer WHERE userid = @userId";   
+            let sqlQuery = "SELECT customerId, firstName, lastName, email, phonenum, address, city, state, " +               
+               "postalCode, country, userid FROM customer WHERE userid = @userId";   
 
             let customerInfo = await pool.request()
                                    .input('userid', sql.VarChar, req.session.userid)

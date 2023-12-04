@@ -49,7 +49,7 @@ router.get('/', async function(req, res, next) {
         let name = req.query.productName;
         let categoryName = req.query.categoryName;
         let pool = await sql.connect(dbConfig);
-        sqlQuery = "SELECT p.productId, p.productName, p.productPrice, c.categoryName FROM product p JOIN category c ON p.categoryId = c.categoryID";
+        sqlQuery = "SELECT p.productId, p.productName, p.productPrice, c.categoryName, p.productImageURL FROM product p JOIN category c ON p.categoryId = c.categoryID";
         let results = null;
 
         if(categoryName && categoryName != "All"){
@@ -73,31 +73,46 @@ router.get('/', async function(req, res, next) {
         }
 
         
-        res.write("<font face = \"Century Gothic\" size = \"2\">");
-        res.write("<table style='width: 100%; border-collapse: collapse;'>");
-        res.write("<tr><th style='border: 2px solid #ddd; padding: 8px; text-align: left;'></th>");
-        res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Product Name</th>");
-        res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Category</th>");
-        res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Price</th></tr>");
+        // res.write("<font face = \"Century Gothic\" size = \"2\">");
+        // res.write("<table style='width: 100%; border-collapse: collapse;'>");
+        // res.write("<tr><th style='border: 2px solid #ddd; padding: 8px; text-align: left;'></th>");
+        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Product Name</th>");
+        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Category</th>");
+        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Price</th></tr>");
         for(let i=0; i<results.recordset.length ; i++){
             let result = results.recordset[i];
             let productId = result.productId;
             let productName = result.productName;
             let productNameURL = encodeURIComponent(productName);
-            productNameURL = productNameURL.replace(/'/g,'%27');
+            productNameURL = productNameURL.replace(/'/g/'%27');
             let productPrice = result.productPrice;                                                                                                                                                                                                                                                                                                                              
             let categoryname = result.categoryName;
             let categoryColor = getCategoryColor(categoryname);
+            let productImageURL = result.productImageURL;
             const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
             const productDetail = 'product?id='+productId;
-
-            res.write("<tr><td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><a href='" + addCartLink + "'>Add to Cart</a></td>");
-            res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + ";'><a href = '"+productDetail+"'>" + productName + "</a></td>");
-            res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>" + categoryname + "</td>");
-            res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>$" + parseFloat(productPrice).toFixed(2) + "</td></tr>");
             
-        }
-        res.write("</table></font>");   
+            // res.write("<tr><td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><a href='" + addCartLink + "'>Add to Cart</a></td>");
+            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + ";'><a href = '"+productDetail+"'>" + productName + "</a></td>");
+            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>" + categoryname + "</td>");
+            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>$" + parseFloat(productPrice).toFixed(2) + "</td>");
+            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><img src='" + productImageURL + "' alt='" + productName + "'></td></tr>");
+
+            res.write("<div style='display: flex; align-items: center; margin-bottom: 20px;'>");
+            res.write("<div style='margin-right: 20px;'>");
+            res.write("<img src='" + productImageURL + "' alt='" + productName + "' style='width: 100px; height: 100px;'>");
+            res.write("</div>");
+
+            res.write("<div>");
+            res.write("<h3>" + productName + "</h3>");
+            res.write("<p>Category: " + categoryname + "</p>");
+            res.write("<p>Price: $" + parseFloat(productPrice).toFixed(2) + "</p>");
+            res.write("<a href='" + addCartLink + "'>Add to Cart</a>");
+            res.write("<a href='" + productDetail + "'>Product Details</a>");
+            res.write("</div>");
+
+            res.write("</div>");
+        } 
         res.end();
     }catch(err){
         console.error(err);
