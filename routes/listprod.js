@@ -25,11 +25,70 @@ router.get('/', async function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>T MART</title>");
-    res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"blue\"><a href = '/'>T MART</a></font></h1>")
-    res.write("<h2>Browse Products By Category and Search by Product Name:</h1>");
-    res.write("<form method=\"get\" action=\"listprod\">");
-    res.write("<p align = \"left\">");
-    res.write("<select size = \"1\" name = \"categoryName\">");
+    res.write(`<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #58a641;
+            padding: 10px;
+            text-align: center;
+        }
+        header nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+        }
+        .search-bar {
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1{
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        h1_1{
+            text-align: center;
+            color: #fbfcfa;
+            margin-top: 20px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .search-bar select, .search-bar input[type='text'] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .search-bar input[type='submit'], .search-bar input[type='reset'] {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .search-bar input[type='submit']:hover, .search-bar input[type='reset']:hover {
+            background-color: #45a049;
+        }
+    </style>`);
+
+
+    res.write("<header>");
+    res.write("<h1_1>T MART</h1_1>");
+    res.write("<nav>");
+    res.write("<a href=\"/\">HOME</a>");
+    res.write("<a href=\"/showcart\">CART</a>");
+    res.write("<a href=\"/listorder\">ORDERS</a>");
+    res.write("<a href=\"/login\">LOGIN</a>");
+    res.write("</nav>");
+    res.write("</header>");
+    res.write("<div class='search-bar'>");
+    res.write("<form method='get' action='listprod'>");
+    res.write("<select name='categoryName'>");
     res.write("<option>All</option>");
     res.write("<option>Beverages</option>");
     res.write("<option>Condiments</option>");
@@ -39,10 +98,10 @@ router.get('/', async function(req, res, next) {
     res.write("<option>Meat/Poultry</option>");
     res.write("<option>Produce</option>");
     res.write("<option>Seafood</option></select>");
-    res.write("<input type=\"text\" name=\"productName\" size=\"50\">");
-    res.write("<input type=\"submit\" value=\"Submit\">");
-    res.write("<input type=\"reset\" value=\"Reset\">");
-    res.write("</p></form>");
+    res.write("<input type='text' name='productName' placeholder='Search products...' size='50'>");
+    res.write("<input type='submit' value='Submit'>");
+    res.write("<input type='reset' value='Reset'>");
+    res.write("</form></div>");
 
     // Get the product name to search for
     try{
@@ -73,12 +132,31 @@ router.get('/', async function(req, res, next) {
         }
 
         
-        // res.write("<font face = \"Century Gothic\" size = \"2\">");
-        // res.write("<table style='width: 100%; border-collapse: collapse;'>");
-        // res.write("<tr><th style='border: 2px solid #ddd; padding: 8px; text-align: left;'></th>");
-        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Product Name</th>");
-        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Category</th>");
-        // res.write("<th style='border: 2px solid #ddd; padding: 8px; text-align: left;'>Price</th></tr>");
+        res.write(`
+            <style>
+                .product-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    justify-content: center;
+                }
+                .product {
+                    text-align: center;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    max-width: 200px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                }
+                .product img {
+                    width: 150px;
+                    height: 150px;
+                    margin-bottom: 10px;
+                }
+            </style>
+        `);
+
+        res.write("<div class='product-container'>");
+
         for(let i=0; i<results.recordset.length ; i++){
             let result = results.recordset[i];
             let productId = result.productId;
@@ -92,27 +170,15 @@ router.get('/', async function(req, res, next) {
             const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
             const productDetail = 'product?id='+productId;
             
-            // res.write("<tr><td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><a href='" + addCartLink + "'>Add to Cart</a></td>");
-            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + ";'><a href = '"+productDetail+"'>" + productName + "</a></td>");
-            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>" + categoryname + "</td>");
-            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'>$" + parseFloat(productPrice).toFixed(2) + "</td>");
-            // res.write("<td style='border: 2px solid #ddd; padding: 8px; color: " + categoryColor + "'><img src='" + productImageURL + "' alt='" + productName + "'></td></tr>");
-
-            res.write("<div style='display: flex; align-items: center; margin-bottom: 20px;'>");
-            res.write("<div style='margin-right: 20px;'>");
-            res.write("<img src='" + productImageURL + "' alt='" + productName + "' style='width: 100px; height: 100px;'>");
-            res.write("</div>");
-
-            res.write("<div>");
+            res.write("<div class='product'>");
+            res.write("<img src='" + productImageURL + "' alt='" + productName + "'>");
             res.write("<h3>" + productName + "</h3>");
             res.write("<p>Category: " + categoryname + "</p>");
             res.write("<p>Price: $" + parseFloat(productPrice).toFixed(2) + "</p>");
             res.write("<a href='" + addCartLink + "'>Add to Cart</a>");
-            res.write("<a href='" + productDetail + "'>Product Details</a>");
+            res.write("<p><a href='" + productDetail + "'>Product Details</a></p>");
             res.write("</div>");
-
-            res.write("</div>");
-        } 
+        }
         res.end();
     }catch(err){
         console.error(err);

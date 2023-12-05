@@ -14,15 +14,15 @@ router.get('/', function (req, res) {
 
     res.write("<div style='text-align: center; padding-top: 50px;'>");
     res.write("<h1 style='font-family: 'Segoe UI', sans-serif; color: #00aaff;'>T MART</h1>");
-    res.write("<div style='display: flex; flex-direction: column; gap: 20px;'>");
-    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/login\" style='text-decoration: none; color: white;'>Login</a></button>");
-    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/listprod\" style='text-decoration: none; color: white;'>Begin Shopping</a></button>");
-    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/listorder\" style='text-decoration: none; color: white;'>List All Orders</a></button>");
-    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/customer\" style='text-decoration: none; color: white;'>Customer Info</a></button>");
-    res.write("<button style='border: none; padding: 10px 20px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 18px; cursor: pointer; outline: none;'><a href=\"/admin\" style='text-decoration: none; color: white;'>Administrators</a></button>");
+    res.write("<div style='display: flex; flex-direction: column; gap: 15px; align-items: center;'>");
+    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/login\" style='text-decoration: none; color: white;'>Login</a></button>");
+    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/listprod\" style='text-decoration: none; color: white;'>Begin Shopping</a></button>");
+    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/listorder\" style='text-decoration: none; color: white;'>List Orders</a></button>");
+    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/customer\" style='text-decoration: none; color: white;'>Customer Info</a></button>");
+    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/admin\" style='text-decoration: none; color: white;'>Admin</a></button>");
     res.write("</div>");
     if(req.session.authenticatedUser)
-        res.write("<p style='font-family: 'Segoe UI', sans-serif; font-size: 16px; color: #00aaff;'>Signed in as: " + req.session.userid + "</p>");
+        res.write("<p style='font-family: 'Segoe UI', sans-serif; font-size: 14px; color: #00aaff;'>Signed in as: " + req.session.userid + "</p>");
     res.write("</div>");
     res.end();
 })
