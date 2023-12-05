@@ -34,7 +34,9 @@ router.get('/', async function(req, res, next) {
         header {
             background-color: #58a641;
             padding: 10px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         header nav a {
             text-decoration: none;
@@ -46,12 +48,6 @@ router.get('/', async function(req, res, next) {
             margin-top: 20px;
         }
         h1{
-            text-align: center;
-            color: #333;
-            margin-top: 20px;
-            font-family: 'Arial Black', sans-serif;
-        }
-        h1_1{
             text-align: center;
             color: #fbfcfa;
             margin-top: 20px;
@@ -74,16 +70,41 @@ router.get('/', async function(req, res, next) {
         .search-bar input[type='submit']:hover, .search-bar input[type='reset']:hover {
             background-color: #45a049;
         }
+        .add-to-cart, .product-details {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .add-to-cart {
+            background-color: #4CAF50; /* Green */
+        }
+    
+        .product-details {
+            background-color: #008CBA; /* Blue */
+        }
+    
+        .add-to-cart:hover, .product-details:hover {
+            opacity: 0.8;
+        }
     </style>`);
 
 
     res.write("<header>");
-    res.write("<h1_1>T MART</h1_1>");
+    res.write("<h1>T MART</h1>");
     res.write("<nav>");
     res.write("<a href=\"/\">HOME</a>");
     res.write("<a href=\"/showcart\">CART</a>");
     res.write("<a href=\"/listorder\">ORDERS</a>");
-    res.write("<a href=\"/login\">LOGIN</a>");
+    if(req.session.authenticatedUser && req.session.userid) {
+        res.write("<span>Welcome, " + req.session.userid + "!</span>");
+        res.write("<a href=\"/logout\">Logout</a>");
+    } else {
+        res.write("<a href=\"/login\">LOGIN</a>");
+    }
     res.write("</nav>");
     res.write("</header>");
     res.write("<div class='search-bar'>");
@@ -140,12 +161,20 @@ router.get('/', async function(req, res, next) {
                     gap: 20px;
                     justify-content: center;
                 }
+                .product-row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    justify-content: center;
+                }
                 .product {
                     text-align: center;
                     border: 1px solid #ccc;
                     padding: 10px;
                     max-width: 200px;
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                    flex: 1 0 calc(25% - 20px); /* Four products per row */
+                    margin-bottom: 20px;
                 }
                 .product img {
                     width: 150px;
@@ -169,14 +198,19 @@ router.get('/', async function(req, res, next) {
             let productImageURL = result.productImageURL;
             const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
             const productDetail = 'product?id='+productId;
+
+            if(i > 0 && i % 5 == 0){
+                res.write("</div>");
+                res.write("<div class='product-container'>");
+            }
             
             res.write("<div class='product'>");
             res.write("<img src='" + productImageURL + "' alt='" + productName + "'>");
             res.write("<h3>" + productName + "</h3>");
             res.write("<p>Category: " + categoryname + "</p>");
             res.write("<p>Price: $" + parseFloat(productPrice).toFixed(2) + "</p>");
-            res.write("<a href='" + addCartLink + "'>Add to Cart</a>");
-            res.write("<p><a href='" + productDetail + "'>Product Details</a></p>");
+            res.write("<a class = 'add-to-cart' href='" + addCartLink + "'>Add to Cart</a>");
+            res.write("<p><a class = 'product-details' href='" + productDetail + "'>Product Details</a></p>");
             res.write("</div>");
         }
         res.end();
