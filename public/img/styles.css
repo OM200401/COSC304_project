@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #58a641;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header nav a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+.search-bar {
+    text-align: center;
+    margin-top: 20px;
+}
+h1{
+    text-align: center;
+    color: #fbfcfa;
+    margin-top: 20px;
+    font-family: 'Arial Black', sans-serif;
+}
+.search-bar select, .search-bar input[type='text'] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.search-bar input[type='submit'], .search-bar input[type='reset'] {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+.search-bar input[type='submit']:hover, .search-bar input[type='reset']:hover {
+    background-color: #45a049;
+}
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.product {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    flex: 1 0 calc(25% - 20px); /* Four products per row */
+    margin-bottom: 20px;
+}
+.product img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+}

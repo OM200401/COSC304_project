@@ -167,7 +167,7 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ques
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Tofu',4,'40 - 100 g pkgs.',23.25);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Genen Shouyu',2,'24 - 250 ml bottles',15.50);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Pavlova',7,'32 - 500 g boxes',17.45);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Alice Mutton',5,'20 - 1 kg tins',39.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Chicken Breast',5,'Raw Chicken 18 kgs',34.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Carnarvon Tigers',6,'16 kg pkg.',62.50);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Teatime Chocolate Biscuits',7,'10 boxes x 12 pieces',9.20);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Sir Rodney''s Marmalade',7,'30 gift boxes',81.00);
@@ -181,6 +181,12 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Jack
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Singaporean Hokkien Fried Mee',8,'32 - 1 kg pkgs.',14.00);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Louisiana Fiery Hot Pepper Sauce',2,'32 - 8 oz bottles',21.05);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Laughing Lumberjack Lager',1,'24 - 12 oz bottles',14.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Milk',3,'2 Litres',9.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ben & Jerrys Chocolate Fudge Brownie',3,'Chocolate Icecream with Bronie chunks',20.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ben & Jerrys Chocolate Therapy',3,'Chocolate icecream with choco cookies ',20.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Ben & Jerrys Milk & Cookies',3,'Vanilla ice cream with choco-chip cookies ',21.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Maggi',8,'Pack of 2 Noodles ',3.00);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Mogu Mogu',1,'25% Lychee Juice ',9.00);
 
 INSERT INTO warehouse(warehouseName) VALUES ('Main warehouse');
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (1, 1, 5, 18);
@@ -193,6 +199,31 @@ INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (7,
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (8, 1, 0, 40);
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (9, 1, 2, 97);
 INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (10, 1, 3, 31);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (11, 1, 5, 21);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (12, 1, 10, 38);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (13, 1, 7, 23.25);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (14, 1, 8, 15.50);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (15, 1, 22, 17.45);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (16, 1, 13, 34);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (17, 1, 6, 62.50);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (18, 1, 5, 9.20);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (19, 1, 10, 81);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (20, 1, 6, 10);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (21, 1, 18, 21);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (22, 1, 6, 14);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (23, 1, 14, 18);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (24, 1, 7, 19);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (25, 1, 18, 18.40);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (26, 1, 11, 9.65);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (27, 1, 17, 14);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (28, 1, 4, 21.05);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (29, 1, 8, 14);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (30, 1, 20, 9);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (31, 1, 11, 20);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (32, 1, 9, 20);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (33, 1, 5, 21);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (34, 1, 33, 3);
+INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (35, 1, 16, 9);
 
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'MA', '22222', 'United States', 'bobby' , 'bobby');
@@ -252,6 +283,7 @@ UPDATE Product SET productImageURL = 'img/QuesoLaPastora.jpeg' WHERE ProductId =
 UPDATE Product SET productImageURL = 'img/Tofu.jpeg' WHERE ProductId = 13;
 UPDATE Product SET productImageURL = 'img/Genen.jpeg' WHERE ProductId = 14;
 UPDATE Product SET productImageURL = 'img/Pavlova.jpeg' WHERE ProductId = 15;
+UPDATE Product SET productImageURL = 'img/Chicken.jpg' WHERE ProductId = 16;
 UPDATE Product SET productImageURL = 'img/Tigers.jpeg' WHERE ProductId = 17;
 UPDATE Product SET productImageURL = 'img/Teatime.jpeg' WHERE ProductId = 18;
 UPDATE Product SET productImageURL = 'img/SirRodneys.jpeg' WHERE ProductId = 19;
@@ -265,7 +297,12 @@ UPDATE Product SET productImageURL = 'img/JacksChowder.jpeg' WHERE ProductId = 2
 UPDATE Product SET productImageURL = 'img/FriedMee.jpeg' WHERE ProductId = 27;
 UPDATE Product SET productImageURL = 'img/HotSauce.jpeg' WHERE ProductId = 28;
 UPDATE Product SET productImageURL = 'img/LumberjackLager.jpeg' WHERE ProductId = 29;
-
+UPDATE Product SET productImageURL = 'img/Milk.jpg' WHERE ProductId = 30;
+UPDATE Product SET productImageURL = 'img/Chocofudgebrownie.png' WHERE ProductId = 31;
+UPDATE Product SET productImageURL = 'img/Chocotherapy.jpg' WHERE ProductId = 32;
+UPDATE Product SET productImageURL = 'img/Milkcookies.jpg' WHERE ProductId = 33;
+UPDATE Product SET productImageURL = 'img/Maggi.jpg' WHERE ProductId = 34;
+UPDATE Product SET productImageURL = 'img/Mogu.jpg' WHERE ProductId = 35;
 
 
 -- Loads image data for product 1
