@@ -238,13 +238,13 @@ router.get('/', async function(req, res, next) {
             res.write("<p><a class = 'product-details' href='" + productDetail + "'>Product Details</a></p>");
             res.write("</div>");
         }
-        res.write("<div class='footer'>");
-        res.write("<p>Contact us: example@example.com | Phone: 123-456-7890</p>");
-        res.write("<div class='social-icons'>");
-        res.write("<a href='https://www.instagram.com/' target='_blank'><i class='fab fa-instagram'></i></a>");
-        res.write("<a href='https://www.facebook.com/' target='_blank'><i class='fab fa-facebook'></i></a>");
-        res.write("</div>");
-        res.write("</div>");
+        // res.write("<div class='footer'>");
+        // res.write("<p>Contact us: example@example.com | Phone: 123-456-7890</p>");
+        // res.write("<div class='social-icons'>");
+        // res.write("<a href='https://www.instagram.com/' target='_blank'><i class='fab fa-instagram'></i></a>");
+        // res.write("<a href='https://www.facebook.com/' target='_blank'><i class='fab fa-facebook'></i></a>");
+        // res.write("</div>");
+        // res.write("</div>");
         res.end();
     }catch(err){
         console.error(err);

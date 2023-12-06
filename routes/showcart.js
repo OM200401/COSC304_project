@@ -8,8 +8,8 @@ router.get('/delete/:id', function(req, res) {
     productList = req.session.productList;
     productList.filter(item => item && item.id !== prodID);
     req.session.productList = productList
-    res.end();
     res.redirect('/showcart');
+    res.end();
 });
 
 router.get('/update/:id/:newQty', function(req, res) {

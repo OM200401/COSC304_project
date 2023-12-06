@@ -12,7 +12,7 @@ let showCart = require('./routes/showcart');
 let checkout = require('./routes/checkout');
 let order = require('./routes/order');
 let login = require('./routes/login');
-// let signup = require('./routes/signup')
+let signup = require('./routes/signup')
 let validateLogin = require('./routes/validateLogin');
 let logout = require('./routes/logout');
 let admin = require('./routes/admin');
@@ -80,7 +80,7 @@ app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
 app.use('/login', login);
-// app.use('/signup', signup)
+app.use('/signup', signup)
 app.use('/validateLogin', validateLogin);
 app.use('/logout', logout);
 app.use('/admin', admin);

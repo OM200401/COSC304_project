@@ -109,10 +109,12 @@ router.post('/', async function(req, res, next) {
         res.write(`<p>Last Name: ${customerInfo.lastName}</p>`);
         
         res.send('Customer successfully added!');
+        res.end();
     } catch (err) {
         console.error(err);
         res.status(500).send(err.message);
         res.write('<h4><a href="signup">Return to signup page</a></h4>');
+        res.end();
     }
 });
 
