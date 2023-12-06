@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
@@ -49,7 +50,7 @@ router.get('/', async function(req, res, next) {
         }
         h1{
             text-align: center;
-            color: #fbfcfa;
+            color: #333;
             margin-top: 20px;
             font-family: 'Arial Black', sans-serif;
         }
@@ -89,6 +90,30 @@ router.get('/', async function(req, res, next) {
     
         .add-to-cart:hover, .product-details:hover {
             opacity: 0.8;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 24px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #007bff;
         }
     </style>`);
 
@@ -191,12 +216,12 @@ router.get('/', async function(req, res, next) {
             let productId = result.productId;
             let productName = result.productName;
             let productNameURL = encodeURIComponent(productName);
-            productNameURL = productNameURL.replace(/'/g/'%27');
+            productNameURL = productNameURL.replace(/'/g/'%27'); 
             let productPrice = result.productPrice;                                                                                                                                                                                                                                                                                                                              
             let categoryname = result.categoryName;
             let categoryColor = getCategoryColor(categoryname);
             let productImageURL = result.productImageURL;
-            const addCartLink = 'addCart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
+            const addCartLink = 'addcart?id='+productId+'&name='+productNameURL+'&price='+productPrice;
             const productDetail = 'product?id='+productId;
 
             if(i > 0 && i % 5 == 0){
@@ -213,12 +238,20 @@ router.get('/', async function(req, res, next) {
             res.write("<p><a class = 'product-details' href='" + productDetail + "'>Product Details</a></p>");
             res.write("</div>");
         }
+        // res.write("<div class='footer'>");
+        // res.write("<p>Contact us: example@example.com | Phone: 123-456-7890</p>");
+        // res.write("<div class='social-icons'>");
+        // res.write("<a href='https://www.instagram.com/' target='_blank'><i class='fab fa-instagram'></i></a>");
+        // res.write("<a href='https://www.facebook.com/' target='_blank'><i class='fab fa-facebook'></i></a>");
+        // res.write("</div>");
+        // res.write("</div>");
         res.end();
     }catch(err){
         console.error(err);
         res.write("An error occured while searching for products !");
         res.end();
     }
+    
     
 
     res.end();

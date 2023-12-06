@@ -103,6 +103,7 @@ router.post('/', async function(req, res, next) {
         console.log("Check4");
         const customerInfo = fetchedCustomer.recordset[0];
 
+<<<<<<< HEAD
         console.log(`<h2>Customer Info:</h2>`);
         console.log(`<p>ID: ${customerInfo.customerId}</p>`);
         console.log(`<p>First Name: ${customerInfo.firstName}</p>`);
@@ -114,6 +115,20 @@ router.post('/', async function(req, res, next) {
         console.error(err);
         res.write(err.message);
         res.send(500);
+=======
+        res.write(`<h2>Customer Info:</h2>`);
+        res.write(`<p>ID: ${customerInfo.customerId}</p>`);
+        res.write(`<p>First Name: ${customerInfo.firstName}</p>`);
+        res.write(`<p>Last Name: ${customerInfo.lastName}</p>`);
+        
+        res.send('Customer successfully added!');
+        res.end();
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err.message);
+        res.write('<h4><a href="signup">Return to signup page</a></h4>');
+        res.end();
+>>>>>>> f2ced176a58acde1285ad755843766c97766e215
     }
 });
 
