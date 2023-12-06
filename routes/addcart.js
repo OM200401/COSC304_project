@@ -23,8 +23,9 @@ router.get('/', function(req, res, next) {
         id = req.query.id;
         name = req.query.name;
         price = req.query.price;
+        // console.log(id, name, price);
     } else {
-        res.redirect("/listprod");
+        return res.redirect("/listprod");
     }
 
     // Update quantity if add same item to order again
@@ -40,7 +41,7 @@ router.get('/', function(req, res, next) {
     }
 
     req.session.productList = productList;
-    res.redirect("/showcart");
+    return res.redirect("/showcart");
 });
 
 module.exports = router;

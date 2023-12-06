@@ -6,7 +6,77 @@ const app = express();
 
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
+    res.write(`<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #58a641;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+        }
+        .search-bar {
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1{
+            text-align: center;
+            color: #fbfcfa;
+            margin-top: 20px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .search-bar select, .search-bar input[type='text'] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .search-bar input[type='submit'], .search-bar input[type='reset'] {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .search-bar input[type='submit']:hover, .search-bar input[type='reset']:hover {
+            background-color: #45a049;
+        }
+        .add-to-cart, .product-details {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+    </style>`);
 
+
+    res.write("<header>");
+    res.write("<h1>T MART</h1>");
+    res.write("<nav>");
+    res.write("<a href=\"/\">HOME</a>");
+    res.write("<a href=\"/showcart\">CART</a>");
+    res.write("<a href=\"/listorder\">ORDERS</a>");
+    if(req.session.authenticatedUser && req.session.userid) {
+        res.write("<span>Welcome, " + req.session.userid + "!</span>");
+        res.write("<a href=\"/logout\">Logout</a>");
+    } else {
+        res.write("<a href=\"/login\">LOGIN</a>");
+    }
+    res.write("</nav>");
+    res.write("</header>");
     /** Create connection, and validate that it connected successfully **/
 
     /**
@@ -24,12 +94,58 @@ router.get('/', function(req, res, next) {
             For each product in the order
                 Write out product information 
     **/
+    res.write(`
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 20px;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 30px;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f5f5f5;
+            }
+            .inner-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .inner-table th, .inner-table td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+            .inner-table th {
+                background-color: #e5e5e5;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            tr:hover {
+                background-color: #eaeaea;
+            }
+        </style>
+`   );
 
     (async function() {
         try {
             let pool = await sql.connect(dbConfig);
 
-            res.write('<h1>Oms Grocery Order List</h1>');
+            res.write('<h1> Grocery Order List</h1>');
             
             let sqlQuery = "SELECT o.orderID, o.orderDate, o.customerId, c.firstName, c.lastName, o.totalAmount"
             + " FROM ordersummary o JOIN customer c ON c.customerId = o.customerId";     

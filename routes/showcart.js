@@ -27,6 +27,78 @@ router.get('/', function (req, res, next) {
     let productList = false;
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>T MART</title>");
+
+    res.write(`<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #58a641;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .update-input {
+            width: 50px;
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+        a:hover {
+            color: #000;
+        }
+        .checkout-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>`);
+
+
+    res.write("<header>");
+    res.write("<h1>T MART</h1>");
+    res.write("<nav>");
+    res.write("<a href=\"/\">HOME</a>");
+    res.write("<a href=\"/showcart\">CART</a>");
+    res.write("<a href=\"/listorder\">ORDERS</a>");
+    if(req.session.authenticatedUser && req.session.userid) {
+        res.write("<span>Welcome, " + req.session.userid + "!</span>");
+        res.write("<a href=\"/logout\">Logout</a>");
+    } else {
+        res.write("<a href=\"/login\">LOGIN</a>");
+    }
+    res.write("</nav>");
+    res.write("</header>");
+
     res.write("<script>");
     res.write("function updateQuantity(prodID, newQty) {");
     res.write("  var xhr = new XMLHttpRequest();");
@@ -69,13 +141,13 @@ router.get('/', function (req, res, next) {
         res.write("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td><td align=\"right\">$" + total.toFixed(2) + "</td></tr>");
         res.write("</table>");
 
-        res.write("<h2><a href=\"checkout\">Check Out</a></h2>");
+        res.write("<h2 class = 'checkout-link'><a href=\"checkout\">Check Out</a></h2>");
         res.write("</form>");
     } else {
         res.write("<h1>Your shopping cart is empty!</h1>");
     }
 
-    res.write('<h2><a href="listprod">Continue Shopping</a></h2>');
+    res.write('<h2 align = \"center\"><a href="listprod">Continue Shopping</a></h2>');
     res.end();
     
 });
