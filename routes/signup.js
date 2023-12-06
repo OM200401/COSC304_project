@@ -64,10 +64,10 @@ router.post('/', async function(req, res, next) {
             password
         } = req.body;
 
-        const query = `INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password)
-                       VALUES (@firstName, @lastName, @email, @phonenum, @address, @city, @state, @postalCode, @country, @userid, @password)`;
+        const query = `INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) OUTPUT INSERTED.customerId VALUES (@firstName, @lastName, @email, @phonenum, @address, @city, @state, @postalCode, @country, @userid, @password)`;
 
         console.log("Check1");
+        console.log(req.body);
         let selectQuery = "SELECT * FROM customer WHERE userid = @userid";
         let results = await pool.request()
             .input('userid', sql.VarChar(50), req.body.userid)
@@ -96,23 +96,24 @@ router.post('/', async function(req, res, next) {
         console.log("Check3");
 
         const fetchQuery = `SELECT * FROM customer WHERE userid = @userid;`;
-        const fetchedCustomer = await request
-            .input('userid', sql.Int, customerId)
+        const fetchedCustomer = await pool.request()
+            .input('userid', sql.VarChar(20), req.body.userid)
             .query(fetchQuery);
 
         console.log("Check4");
         const customerInfo = fetchedCustomer.recordset[0];
 
-        res.write(`<h2>Customer Info:</h2>`);
-        res.write(`<p>ID: ${customerInfo.customerId}</p>`);
-        res.write(`<p>First Name: ${customerInfo.firstName}</p>`);
-        res.write(`<p>Last Name: ${customerInfo.lastName}</p>`);
-        
-        res.send('Customer successfully added!');
+        console.log(`<h2>Customer Info:</h2>`);
+        console.log(`<p>ID: ${customerInfo.customerId}</p>`);
+        console.log(`<p>First Name: ${customerInfo.firstName}</p>`);
+        console.log(`<p>Last Name: ${customerInfo.lastName}</p>`);
+        console.log('Customer successfully added!');
+
+        res.send(200);
     } catch (err) {
         console.error(err);
-        res.status(500).send(err.message);
-        res.write('<h4><a href="signup">Return to signup page</a></h4>');
+        res.write(err.message);
+        res.send(500);
     }
 });
 
