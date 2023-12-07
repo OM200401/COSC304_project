@@ -1,7 +1,7 @@
 # Executive Summary
 
 ## Project Overview
-The project aims to develop a robust and user-friendly grocery shopping platform named "T MART." This platform offers a diverse range of products across various categories, facilitating easy product search, purchase, and management for users. The platform provides a secure and seamless shopping experience while emphasizing user convenience and satisfaction.
+The project aims to develop a robust and user-friendly grocery shopping platform named "S MART." This platform offers a diverse range of products across various categories, facilitating easy product search, purchase, and management for users. The platform provides a secure and seamless shopping experience while emphasizing user convenience and satisfaction.
 
 ### Summary
 
@@ -13,4 +13,4 @@ The website enables users to add products to cart thus facilitating them with a 
 
 The website boasts a multitude of features including user-friendly product search and filtering products based on categories. User account creation and authentication for secure login and logout functionality. Interactive product pages with details for each product. Cart management allowing users to change the items in their cart accordingly.
 
-**T-MART** aims to provide an exceptional online shopping experience by focussing on user convenience, security and quality. With its diverse features and user-centric design , the platform aims  to become a go-to destination for users seeking a seamless and enjoyable shopping journey.
+**S-MART** aims to provide an exceptional online shopping experience by focussing on user convenience, security and quality. With its diverse features and user-centric design , the platform aims  to become a go-to destination for users seeking a seamless and enjoyable shopping journey.

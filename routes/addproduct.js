@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
 
+
 router.get('/', function(req,res,next) {
     res.write("<title>Admin</title>");
     res.write("<h1 align = 'center'>Admin Dashboard<h1>");
@@ -77,6 +78,10 @@ router.get('/', function(req,res,next) {
     res.write("<label for='productPrice'>Product Price:</label>");
     res.write("<input type='text' id='productPrice' name='productPrice' required>");
     res.write("</div>");
+    res.write("<div class='form-group'>");
+    res.write("<label for='productImage'>Product Image:</label>");
+    res.write("<input type='file' id='productImage' name='productImage' accept='image/*'>");
+    res.write("</div>");
     res.write("<input type='submit' value='Add Product'>");
     res.write("</form>");
     res.write("</div>");
@@ -93,6 +98,7 @@ router.post('/',async function(req,res,next) {
             productPrice
         } = req.body;
 
+        
         const addprod = `INSERT INTO product (productName, categoryId, productDesc, productPrice)
         VALUES (@productName, @categoryId, @productDesc, @productPrice)`;
         console.log("check1");

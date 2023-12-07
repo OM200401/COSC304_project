@@ -7,7 +7,99 @@ const moment = require('moment');
 router.get('/', async function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>Order Summary</title>");
+    res.write(`<style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #aef280; 
+                }
+                header {
+                    background-color: #58a641;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                header nav a {
+                    text-decoration: none;
+                    color: #333;
+                    margin: 0 10px;
+                }
+                h1{
+                    text-align: center;
+                    color: #333;
+                    margin-top: 20px;
+                    font-family: 'Arial Black', sans-serif;
+                }
+                h2 {
+                    margin-top: 20px;
+                    text-align: center;
+                }
+        
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+        
+                table, th, td {
+                    border: 1px solid #ddd;
+                }
+        
+                th, td {
+                    padding: 10px;
+                    text-align: left;
+                }
+        
+                th {
+                    background-color: #f2f2f2;
+                }
+        
+                tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+        
+                button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #007bff;
+                    color: white;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+        
+                button a {
+                    text-decoration: none;
+                    color: white;
+                }
+        
+                button:hover {
+                    background-color: #0056b3;
+                }
+            </style>`);
 
+    
+    res.write("<header>");
+    res.write("<h1>S MART</h1>");
+    res.write("<nav>");
+    res.write("<a href=\"/\">HOME</a>");
+    res.write("<a href = '/listprod'>SHOP PRODUCTS</a>");
+    res.write("<a href=\"/showcart\">CART</a>");
+    res.write("<a href=\"/listorder\">ORDERS</a>");
+    res.write("<a href=\"/admin\">ADMIN</a>");
+    res.write("<a href=\"/customer\">CUSTOMERS</a>");
+
+    if(req.session.authenticatedUser && req.session.userid) {
+        res.write("<span>Welcome, " + req.session.userid + "!</span>");
+        res.write("<a href=\"/logout\">Logout</a>");
+    } else {
+        res.write("<a href=\"/login\">LOGIN</a>");
+    }
+    res.write("</nav>");
+    res.write("</header>");
+    res.write("</div>");
 
     let productList = false;
     if (req.session.productList && req.session.productList.length > 0) {
@@ -30,7 +122,7 @@ router.get('/', async function(req, res, next) {
         .query(validateQuery);
 
         if(validateResult.recordset.length === 0){
-            res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"#3399FF\">T MART</font></h1>");
+            res.write("<h1 align = \"center\"><font face = \"cursive\" color = \"#3399FF\">S MART</font></h1>");
             res.write("<hr>The password you entered was incorrect. Please go back and try again !</hr>")
             res.end();
             return;

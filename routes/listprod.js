@@ -119,7 +119,7 @@ router.get('/', async function(req, res, next) {
 
 
     res.write("<header>");
-    res.write("<h1>T MART</h1>");
+    res.write("<h1>S MART</h1>");
     res.write("<nav>");
     res.write("<a href=\"/\">HOME</a>");
     res.write("<a href=\"/showcart\">CART</a>");

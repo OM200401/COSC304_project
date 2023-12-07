@@ -74,7 +74,7 @@ router.get('/', function(req,res,next) {
         </style>`)
 
     res.write("<header>");
-    res.write("<h1>T MART</h1>");
+    res.write("<h1>S MART</h1>");
     res.write("<nav>");
     res.write("<a href=\"/\">HOME</a>");
     res.write("<a href = '/listprod'>SHOP PRODUCTS</a>");

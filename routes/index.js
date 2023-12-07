@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
     //     // to get an idea of how the index page is being rendered
     // });
 
-    res.write("<title>T MART</title>");
+    res.write("<title>S MART</title>");
     res.write(`<style>
                 body {
                     font-family: Arial, sans-serif;
@@ -86,7 +86,7 @@ router.get('/', function (req, res) {
 
     
     res.write("<header>");
-    res.write("<h1>T MART</h1>");
+    res.write("<h1>S MART</h1>");
     res.write("<nav>");
     res.write("<a href=\"/\">HOME</a>");
     res.write("<a href = '/listprod'>SHOP PRODUCTS</a>");

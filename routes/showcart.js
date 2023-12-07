@@ -33,7 +33,7 @@ router.get('/update/:id/:newQty', function(req, res) {
 router.get('/', function (req, res, next) {
     let productList = false;
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>T MART</title>");
+    res.write("<title>S MART</title>");
 
     res.write(`<style>
         body {
@@ -92,7 +92,7 @@ router.get('/', function (req, res, next) {
 
 
     res.write("<header>");
-    res.write("<h1>T MART</h1>");
+    res.write("<h1>S MART</h1>");
     res.write("<nav>");
     res.write("<a href=\"/\">HOME</a>");
     res.write("<a href=\"/showcart\">CART</a>");
