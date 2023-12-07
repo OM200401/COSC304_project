@@ -1,4 +1,70 @@
-<div style="margin:0 auto;text-align:center;display:inline">
+<style>
+    /* Style for login form */
+    .login-container {
+        margin: 0 auto;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        max-width: 400px;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #58a641;
+        box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.1);
+    }
+
+    .login-table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .login-table td {
+        padding: 5px 0;
+        text-align: left;
+    }
+
+    .login-table input[type="text"],
+    .login-table input[type="password"],
+    .login-table input[type="submit"] {
+        width: calc(100% - 20px);
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .login-table input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .login-container p {
+        font-size: 14px;
+    }
+
+    .login-container a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .login-table input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .login-table input[type="submit"]:hover {
+        background-color: #45a049;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    }
+</style>
+
+
+<div class="login-container">
 
     <h3>Please Login to System</h3>
 
@@ -8,7 +74,7 @@
 
     <br>
     <form name="MyForm" method=post action="/validateLogin">
-        <table style="display:inline">
+        <table class="login-table">
             <tr>
                 <td>
                     <div align="right">
@@ -27,7 +93,7 @@
             </tr>
         </table>
         <br />
-        <input class="submit" type="submit" name="Submit2" value="Log In">
+        <input type="submit" name="Submit2" value="Log In">
     </form>
 
     <p>Don't have an account? <a href="/signup">Sign up</a></p>

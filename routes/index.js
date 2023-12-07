@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
+//Allows to read and display the md file 
+router.use(express.static(path.join(__dirname, '/')));
 
 // Rendering the main page
 router.get('/', function (req, res) {
@@ -11,19 +15,120 @@ router.get('/', function (req, res) {
     //     // to get an idea of how the index page is being rendered
     // });
 
-    res.write("<div style='text-align: center; padding-top: 50px;'>");
-    res.write("<h1 style='font-family: 'Segoe UI', sans-serif; color: #00aaff;'>T MART</h1>");
-    res.write("<div style='display: flex; flex-direction: column; gap: 15px; align-items: center;'>");
-    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/login\" style='text-decoration: none; color: white;'>Login</a></button>");
-    res.write("<a href=\"/signup\" style='text-decoration: none; color: white; display: inline-block; padding: 8px 15px; background-color: #00aaff; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px;'>Sign up</a>");
-    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/listprod\" style='text-decoration: none; color: white;'>Begin Shopping</a></button>");
-    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/listorder\" style='text-decoration: none; color: white;'>List Orders</a></button>");
-    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/customer\" style='text-decoration: none; color: white;'>Customer Info</a></button>");
-    res.write("<button style='border: none; padding: 8px 15px; background-color: #00aaff; color: white; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; cursor: pointer; outline: none;'><a href=\"/admin\" style='text-decoration: none; color: white;'>Admin</a></button>");
+    res.write("<title>T MART</title>");
+    res.write(`<style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #aef280; 
+                }
+                header {
+                    background-color: #58a641;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                header nav a {
+                    text-decoration: none;
+                    color: #333;
+                    margin: 0 10px;
+                }
+                h1{
+                    text-align: center;
+                    color: #333;
+                    margin-top: 20px;
+                    font-family: 'Arial Black', sans-serif;
+                }
+                .contributors {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    margin-top: 20px;
+                }
+                .contributor {
+                    text-align: center;
+                    margin: 20px;
+                }
+                .contributor img {
+                    width: 200px;
+                    height: auto;
+                    border-radius: 50%; /* Make the images circular */
+                    margin-bottom: 10px; /* Spacing between image and text */
+                }
+                .contributor h3 {
+                    margin-bottom: 5px;
+                }
+                .contributor p {
+                    font-size: 14px;
+                    color: #666;
+                }
+                .markdown-files {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+                .markdown-files a button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #58a641; 
+                    color: white;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: background-color 0.3s ease; /* Smooth color transition on hover */
+                }
+                .markdown-files a button:hover {
+                    background-color: #17591e; /* Darker blue on hover */
+                }
+            </style>`);
+
+    
+    res.write("<header>");
+    res.write("<h1>T MART</h1>");
+    res.write("<nav>");
+    res.write("<a href=\"/\">HOME</a>");
+    res.write("<a href = '/listprod'>SHOP PRODUCTS</a>");
+    res.write("<a href=\"/showcart\">CART</a>");
+    res.write("<a href=\"/listorder\">ORDERS</a>");
+    res.write("<a href=\"/admin\">ADMIN</a>");
+    res.write("<a href=\"/customer\">CUSTOMERS</a>");
+
+    if(req.session.authenticatedUser && req.session.userid) {
+        res.write("<span>Welcome, " + req.session.userid + "!</span>");
+        res.write("<a href=\"/logout\">Logout</a>");
+    } else {
+        res.write("<a href=\"/login\">LOGIN</a>");
+    }
+    res.write("</nav>");
+    res.write("</header>");
     res.write("</div>");
-    if(req.session.authenticatedUser)
-        res.write("<p style='font-family: 'Segoe UI', sans-serif; font-size: 14px; color: #00aaff;'>Signed in as: " + req.session.userid + "</p>");
+    
+    res.write("<h2 align = 'center'>Contributors</h2>");
+    res.write("<div class='contributors'>");
+    // Display images of contributors
+
+    res.write("<div class='contributor'>");
+    res.write("<img src='img/image.jpg'>");
+    res.write("<h3>Om Mistry</h3>");
+    res.write("<p>3rd Year Computer Science Major</p>");
     res.write("</div>");
+
+    res.write("<div class='contributor'>");
+    res.write("<img src='img/aamir.jpg'>");
+    res.write("<h3>Syed Aamir Ahmed</h3>");
+    res.write("<p>3rd Year Computer Science Major</p>");
+    res.write("</div>");
+
+    res.write("</div>");
+
+    res.write("<h2 align = 'center'>Executive Summary</h2>");
+    res.write("<div class='markdown-files'>");
+    // Display buttons to show markdown files
+    res.write("<a href='/execsummary.md' target='_blank'><button>Executive Summary</button></a>");
+    res.write("</div>");
+
     res.end();
 })
 
